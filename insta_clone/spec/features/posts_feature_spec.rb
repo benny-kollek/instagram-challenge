@@ -9,7 +9,7 @@ feature 'posts' do
     end
   end
 
-  context 'restaurants have been added' do
+  context 'posts have been added' do
     before do
       Post.create(text: 'Hello world!')
     end
@@ -20,4 +20,15 @@ feature 'posts' do
       expect(page).not_to have_content('No posts yet')
     end
   end
+
+  context 'creating posts' do
+  scenario 'prompts user to fill out a form, then displays the new post' do
+    visit '/posts'
+    click_link 'Add a post'
+    fill_in 'Text', with: 'Hello world!'
+    click_button 'Post'
+    expect(page).to have_content 'Hello world!'
+    expect(current_path).to eq '/posts'
+  end
+end
 end
